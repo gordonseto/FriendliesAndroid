@@ -1,6 +1,7 @@
 package com.friendliesapp.friendlies.Model;
 
 import android.location.Location;
+import android.util.Log;
 
 import com.firebase.geofire.GeoLocation;
 import com.google.firebase.database.FirebaseDatabase;
@@ -97,4 +98,17 @@ public class Broadcast {
     }
 
     public Broadcast(){}
+
+    public void getBroadcastUser(final OnDownloadFinishedListener listener){
+        if (authorUid != null) {
+            User user = new User(authorUid);
+            user.downloadUserInfo(new OnDownloadFinishedListener() {
+                @Override
+                public void onDownloadFinished() {
+                    listener.onDownloadFinished();
+                }
+            });
+        }
+    }
+
 }

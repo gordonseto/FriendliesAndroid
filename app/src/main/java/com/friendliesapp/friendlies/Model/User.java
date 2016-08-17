@@ -1,11 +1,17 @@
 package com.friendliesapp.friendlies.Model;
 
+import android.content.Context;
 import android.graphics.Bitmap;
+import android.util.Log;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.sql.Time;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -157,11 +163,37 @@ public class User {
         this.uid = uid;
     }
 
-    public interface OnDownloadFinishedListener {
-        public void onDownloadFinished();
-    }
+    public User(){}
 
-    public void downloadUserInfo(OnDownloadFinishedListener listener){
+    public void downloadUserInfo(final OnDownloadFinishedListener listener){
+        if (uid == null) { return; }
+        User myUser = this;
+        firebase = FirebaseDatabase.getInstance();
+        firebase.getReference("users").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                displayName = (String)dataSnapshot.child("displayName").getValue();
+                if (displayName == null) { displayName = ""; }
+                gamerTag = (String)dataSnapshot.child("gamerTag").getValue();
+                if (gamerTag == null) { gamerTag = ""; }
+                characters = (ArrayList<String>)dataSnapshot.child("characters").getValue();
+                if (characters == null) { characters = new ArrayList<String>(); }
+                facebookId = (String)dataSnapshot.child("facebookId").getValue();
+                if (facebookId == null) { facebookId = "";}
+                lastAvailable = (Double)dataSnapshot.child("lastAvailable").getValue();
+                if (lastAvailable == null) { lastAvailable = null; }
+                conversations = (Map<String, Boolean>)dataSnapshot.child("conversations").getValue();
+                if (conversations == null) { new HashMap<String, Boolean>();}
+                onlyFriends = (Boolean)dataSnapshot.child("onlyFriends").getValue();
+                if (onlyFriends == null) { onlyFriends = false; }
+                Log.i("MYAPP", "downloaded " + displayName);
+                listener.onDownloadFinished();
+            }
 
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 }

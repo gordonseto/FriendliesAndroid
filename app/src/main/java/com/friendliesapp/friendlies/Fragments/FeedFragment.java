@@ -22,6 +22,7 @@ import com.firebase.geofire.GeoLocation;
 import com.firebase.geofire.GeoQuery;
 import com.firebase.geofire.GeoQueryEventListener;
 import com.friendliesapp.friendlies.Model.Broadcast;
+import com.friendliesapp.friendlies.Model.OnDownloadFinishedListener;
 import com.friendliesapp.friendlies.Model.User;
 import com.friendliesapp.friendlies.R;
 import com.google.firebase.database.DataSnapshot;
@@ -30,6 +31,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -145,15 +148,19 @@ public class FeedFragment extends Fragment implements LocationListener {
                     firebase.getReference("broadcasts").child(key).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
-                            Broadcast broadcast = dataSnapshot.getValue(Broadcast.class);
+                            final Broadcast broadcast = dataSnapshot.getValue(Broadcast.class);
                             Log.i("MYAPP", broadcast.toString());
 
-                            receivedBroadcasts++;
-
-                            broadcast.getAuthor().downloadUserInfo(new User.OnDownloadFinishedListener() {
+                            broadcast.getBroadcastUser(new OnDownloadFinishedListener() {
                                 @Override
                                 public void onDownloadFinished() {
-                                    
+                                    //check if should see user details
+                                    receivedBroadcasts++;
+
+                                    broadcasts.add(broadcast);
+                                    if (receivedBroadcasts == broadcastKeys.size()) {
+                                        sortBroadcasts();
+                                    }
                                 }
                             });
                         }
@@ -166,6 +173,25 @@ public class FeedFragment extends Fragment implements LocationListener {
                 }
             }
         }
+        if (broadcastKeys.size() == 0){
+            sortBroadcasts();
+        }
+    }
+
+    public void sortBroadcasts(){
+        //filter blocked broadcasts {
+        Collections.sort(broadcasts, new Comparator<Broadcast>(){
+            public int compare(Broadcast o1, Broadcast o2){
+                if(o1.getTime() == o2.getTime())
+                    return 0;
+                return o1.getTime() > o2.getTime() ? -1 : 1;
+            }
+        });
+        finishedManipulatingBroadcasts();
+    }
+
+    public void finishedManipulatingBroadcasts(){
+        Log.i("MYAPP", "done " + String.valueOf(broadcasts.size()));
     }
 
     public void locationAuthStatus(){
