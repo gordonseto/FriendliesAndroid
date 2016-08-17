@@ -1,0 +1,73 @@
+{
+  "project_info": {
+    "project_number": "650342941267",
+    "firebase_url": "https://friendlies-e6011.firebaseio.com",
+    "project_id": "friendlies-e6011",
+    "storage_bucket": "friendlies-e6011.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:650342941267:android:371643ce5d692367",
+        "android_client_info": {
+          "package_name": "com.friendliesapp.Friendlies"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "650342941267-t5gn8rj8rqj0fkmdju3pp6t34ct6qmlt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDiKpECEaVkJLfHB6uSnO5VOgGUlXp7NeE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:650342941267:android:1be87e5a4141f1ea",
+        "android_client_info": {
+          "package_name": "com.friendliesapp.friendlies"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "650342941267-t5gn8rj8rqj0fkmdju3pp6t34ct6qmlt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDiKpECEaVkJLfHB6uSnO5VOgGUlXp7NeE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
