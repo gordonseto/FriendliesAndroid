@@ -15,7 +15,6 @@ public class Broadcast {
 
     private String key;
     private String authorUid;
-    private User author;
     private GeoLocation geolocation;
     private Double time;
     private Boolean hasSetup = false;
@@ -38,14 +37,6 @@ public class Broadcast {
 
     public void setAuthorUid(String authorUid) {
         this.authorUid = authorUid;
-    }
-
-    public User getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(User author) {
-        this.author = author;
     }
 
     public GeoLocation getGeolocation() {
@@ -101,7 +92,7 @@ public class Broadcast {
 
     public void getBroadcastUser(final OnDownloadFinishedListener listener){
         if (authorUid != null) {
-            User user = new User(authorUid);
+            user = new User(authorUid);
             user.downloadUserInfo(new OnDownloadFinishedListener() {
                 @Override
                 public void onDownloadFinished() {

@@ -2,12 +2,64 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.friendliesapp.friendlies.Fragments.FeedFragment">
+    tools:context="com.friendliesapp.friendlies.Fragments.FeedFragment"
+    android:background="@color/colorPrimaryDark">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="feed" />
+        android:layout_gravity="center">
 
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/broadcastsRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="41dp" />
+
+        <com.bartoszlipinski.recyclerviewheader2.RecyclerViewHeader
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/header">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:background="@color/colorPrimary"
+                android:layout_marginTop="41dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:id="@+id/relativeLayout">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Broadcast you&apos;re available!"
+                    android:id="@+id/textView"
+                    android:textColor="@color/lightGrayColor"
+                    android:textStyle="bold"
+                    android:textSize="15dp"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginLeft="8dp" />
+
+                <ImageView
+                    android:layout_width="134dp"
+                    android:layout_height="70dp"
+                    android:id="@+id/imageView"
+                    android:src="@drawable/hexagon"
+                    android:layout_gravity="right"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginRight="-20dp" />
+
+            </RelativeLayout>
+        </com.bartoszlipinski.recyclerviewheader2.RecyclerViewHeader>
+
+    </RelativeLayout>
 </FrameLayout>

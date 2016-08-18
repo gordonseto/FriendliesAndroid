@@ -1,4 +1,4 @@
-package com.friendliesapp.friendlies;
+package com.friendliesapp.friendlies.Activities;
 
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -21,6 +21,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.friendliesapp.friendlies.Fragments.FeedFragment;
+import com.friendliesapp.friendlies.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;

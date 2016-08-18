@@ -5,6 +5,7 @@ import android.Manifest;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Rect;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
@@ -12,15 +13,19 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bartoszlipinski.recyclerviewheader2.RecyclerViewHeader;
 import com.firebase.geofire.GeoFire;
 import com.firebase.geofire.GeoLocation;
 import com.firebase.geofire.GeoQuery;
 import com.firebase.geofire.GeoQueryEventListener;
+import com.friendliesapp.friendlies.Adapters.BroadcastsAdapter;
 import com.friendliesapp.friendlies.Model.Broadcast;
 import com.friendliesapp.friendlies.Model.OnDownloadFinishedListener;
 import com.friendliesapp.friendlies.Model.User;
@@ -44,6 +49,9 @@ import java.util.StringTokenizer;
  * create an instance of this fragment.
  */
 public class FeedFragment extends Fragment implements LocationListener {
+
+    RecyclerView recyclerView;
+    BroadcastsAdapter adapter;
 
     FirebaseDatabase firebase;
 
@@ -79,11 +87,26 @@ public class FeedFragment extends Fragment implements LocationListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        View v = inflater.inflate(R.layout.fragment_feed, container, false);
+
+        recyclerView = (RecyclerView)v.findViewById(R.id.broadcastsRecyclerView);
+        recyclerView.setHasFixedSize(true);
+        LinearLayoutManager manager = new LinearLayoutManager(getContext());
+        manager.setOrientation(LinearLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(manager);
+        recyclerView.addItemDecoration(new VerticalSpaceItemDecorator(61));
+
+        RecyclerViewHeader header = (RecyclerViewHeader)v.findViewById(R.id.header);
+        header.attachTo(recyclerView);
+
+        adapter = new BroadcastsAdapter(broadcasts);
+        recyclerView.setAdapter(adapter);
+
         firebase = FirebaseDatabase.getInstance();
 
         beginFeedVC();
 
-        return inflater.inflate(R.layout.fragment_feed, container, false);
+        return v;
     }
 
     public void beginFeedVC(){
@@ -192,6 +215,7 @@ public class FeedFragment extends Fragment implements LocationListener {
 
     public void finishedManipulatingBroadcasts(){
         Log.i("MYAPP", "done " + String.valueOf(broadcasts.size()));
+        adapter.notifyDataSetChanged();
     }
 
     public void locationAuthStatus(){
@@ -230,5 +254,20 @@ public class FeedFragment extends Fragment implements LocationListener {
     @Override
     public void onProviderDisabled(String s) {
 
+    }
+}
+
+class VerticalSpaceItemDecorator extends RecyclerView.ItemDecoration {
+
+    private final int spacer;
+
+    public VerticalSpaceItemDecorator(int spacer) {
+        this.spacer = spacer;
+    }
+
+    @Override
+    public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+        super.getItemOffsets(outRect, view, parent, state);
+        outRect.bottom = spacer;
     }
 }
