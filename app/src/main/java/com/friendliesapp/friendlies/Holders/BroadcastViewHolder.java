@@ -1,8 +1,11 @@
 package com.friendliesapp.friendlies.Holders;
 
+import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -10,6 +13,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import com.friendliesapp.friendlies.Model.Broadcast;
+import com.friendliesapp.friendlies.Model.User;
 import com.friendliesapp.friendlies.R;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -59,6 +63,21 @@ public class BroadcastViewHolder extends RecyclerView.ViewHolder {
             gamerTag.setText(broadcast.getUser().getGamerTag());
             broadcastDesc.setText(broadcast.getBroadcastDesc());
             timeLabel.setText(String.valueOf(broadcast.getTime()));
+
+            arrangeLinearLayoutCharacters(broadcast.getUser(), characterLinearLayout);
+        }
+    }
+
+    public void arrangeLinearLayoutCharacters(User user, LinearLayout linearLayout){
+        linearLayout.removeAllViews();
+
+        if (user.getCharacters() != null) {
+            for (String character : user.getCharacters()){
+                Log.i("MYAPP", "adding character");
+                ImageView imageView = new ImageView(linearLayout.getContext());
+                imageView.setImageResource(linearLayout.getContext().getResources().getIdentifier("image" + character, "drawable", linearLayout.getContext().getPackageName()));
+                linearLayout.addView(imageView);
+            }
         }
     }
 }

@@ -28,7 +28,7 @@ public class LoginActivity extends AppCompatActivity {
         getSupportActionBar().hide();
 
         LoginButton loginButton = (LoginButton)findViewById(R.id.login_button);
-        loginButton.setReadPermissions("email");
+        loginButton.setReadPermissions("email", "public_profile");
 
         FacebookSdk.sdkInitialize(getApplicationContext());
         callbackManager = CallbackManager.Factory.create();
@@ -53,6 +53,8 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onError(FacebookException error) {
                 Log.i("MYAPP", error.toString());
+                Log.i("MYAPP", error.getLocalizedMessage());
+                error.printStackTrace();
             }
         });
 

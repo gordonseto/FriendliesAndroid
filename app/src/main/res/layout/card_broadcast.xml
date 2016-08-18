@@ -59,10 +59,12 @@
             android:orientation="horizontal"
             android:layout_width="wrap_content"
             android:layout_height="20dp"
-            android:layout_alignParentTop="true"
+            android:id="@+id/characterLinearLayout"
+            android:layout_alignTop="@+id/displayName"
             android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:id="@+id/characterLinearLayout"></LinearLayout>
+            android:layout_alignParentEnd="false"
+            android:layout_marginRight="8dp"
+            android:gravity="right"></LinearLayout>
 
         <ImageView
             android:layout_width="wrap_content"

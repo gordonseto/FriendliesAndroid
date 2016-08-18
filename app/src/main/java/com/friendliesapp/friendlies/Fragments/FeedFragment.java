@@ -14,6 +14,7 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -107,16 +108,19 @@ public class FeedFragment extends Fragment implements LocationListener {
 
         firebase = FirebaseDatabase.getInstance();
 
+        /*
         if (FirebaseAuth.getInstance().getCurrentUser() != null) {
-            beginFeedVC();
+            beginFeedFragment();
         } else {
             presentLoginActivity();
         }
+*/
+        beginFeedFragment();
 
         return v;
     }
 
-    public void beginFeedVC(){
+    public void beginFeedFragment(){
         locationAuthStatus();
     }
 
