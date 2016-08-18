@@ -3,6 +3,7 @@ package com.friendliesapp.friendlies.Fragments;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Rect;
@@ -25,11 +26,13 @@ import com.firebase.geofire.GeoFire;
 import com.firebase.geofire.GeoLocation;
 import com.firebase.geofire.GeoQuery;
 import com.firebase.geofire.GeoQueryEventListener;
+import com.friendliesapp.friendlies.Activities.LoginActivity;
 import com.friendliesapp.friendlies.Adapters.BroadcastsAdapter;
 import com.friendliesapp.friendlies.Model.Broadcast;
 import com.friendliesapp.friendlies.Model.OnDownloadFinishedListener;
 import com.friendliesapp.friendlies.Model.User;
 import com.friendliesapp.friendlies.R;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
@@ -104,7 +107,11 @@ public class FeedFragment extends Fragment implements LocationListener {
 
         firebase = FirebaseDatabase.getInstance();
 
-        beginFeedVC();
+        if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+            beginFeedVC();
+        } else {
+            presentLoginActivity();
+        }
 
         return v;
     }
@@ -254,6 +261,11 @@ public class FeedFragment extends Fragment implements LocationListener {
     @Override
     public void onProviderDisabled(String s) {
 
+    }
+
+    public void presentLoginActivity(){
+        Intent intent = new Intent(getActivity().getApplicationContext(), LoginActivity.class);
+        startActivity(intent);
     }
 }
 
